@@ -112,6 +112,9 @@ void show_history(int argc, char *argv[]);
 void print_to_console( const char *str );
 int printf( const char *format, ... );
 
+/* Create queue_str_task */
+void task_fork( int argc, char *argv[]);
+
 /* Enumeration for command types. */
 enum {
 	CMD_ECHO = 0,
@@ -120,6 +123,7 @@ enum {
 	CMD_HISTORY,
 	CMD_MAN,
 	CMD_PS,
+	CMD_EXEC,
 	CMD_COUNT
 } CMD_TYPE;
 /* Structure for command handler. */
@@ -134,7 +138,8 @@ const hcmd_entry cmd_data[CMD_COUNT] = {
 	[CMD_HELP] = {.cmd = "help", .func = show_cmd_info, .description = "List all commands you can use."},
 	[CMD_HISTORY] = {.cmd = "history", .func = show_history, .description = "Show latest commands entered."}, 
 	[CMD_MAN] = {.cmd = "man", .func = show_man_page, .description = "Manual pager."},
-	[CMD_PS] = {.cmd = "ps", .func = show_task_info, .description = "List all the processes."}
+	[CMD_PS] = {.cmd = "ps", .func = show_task_info, .description = "List all the processes."},
+	[CMD_EXEC] = {.cmd = "exec", .func = task_fork, .description = "New task."}
 };
 
 /* Structure for environment variables. */
@@ -390,6 +395,21 @@ void queue_str_task1()
 void queue_str_task2()
 {
 	queue_str_task("Hello 2\n", 50);
+}
+
+/* Controling the fork option of the function "first" */
+int fork_flag = 0;
+
+void program_loader()
+{
+	setpriority( 0, PRIORITY_DEFAULT + 5 );
+	queue_str_task2();
+}
+
+void task_fork( int argc, char *argv[] )
+{
+	//if (!fork()) queue_str_task2();
+	fork_flag = 1;
 }
 
 void print_to_console( const char *str )
@@ -854,7 +874,20 @@ void first()
 
 	setpriority(0, PRIORITY_LIMIT);
 
-	while(1);
+	while(1)
+	{
+		if ( fork_flag == 1 )
+		{
+			setpriority( 0, 0 );
+
+			/* Clear the flag first. */
+			fork_flag = 0;
+			if (!fork()) program_loader();
+
+			setpriority( 0, PRIORITY_LIMIT );
+		}
+	}
+
 }
 
 struct pipe_ringbuffer {
