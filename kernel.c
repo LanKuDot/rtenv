@@ -221,6 +221,16 @@ int mq_open(const char *name, int oflag)
 	return open(name, 0);
 }
 
+/* Reference from school510587.
+ * Created for the purpose of the unit test.
+ * This version of malloc is fake, NOT act the 
+ * same as C standard malloc(). */
+void *malloc( size_t size )
+{
+	static char m[1024] = {0};
+	return m;
+}
+
 void serialout(USART_TypeDef* uart, unsigned int intr)
 {
 	int fd;
