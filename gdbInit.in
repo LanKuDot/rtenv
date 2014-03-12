@@ -8,4 +8,5 @@ set logging overwrite
 c
 
 source unitTest_itoa.in
+set logging overwrite off
 # Add another testing case from here
