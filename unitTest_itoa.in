@@ -1,0 +1,32 @@
+set $stringBuffer=utString
+set $cases=3
+set $i=0
+
+set logging on
+
+printf "Test itoa():\n"
+
+call itoa( 12, $stringBuffer, 10 )
+if !strcmp( "12", $stringBuffer )
+	set $i = $i + 1
+else
+	printf "Failed: input: 12; output: %s\n" $stringBuffer
+end
+
+call itoa( -12, $stringBuffer, 10 )
+if !strcmp( "-12", $stringBuffer )
+	set $i = $i + 1
+else
+	printf "Failed: input: -12; output: %s\n" $stringBuffer
+end
+
+call itoa( 0, $stringBuffer, 10 )
+if !strcmp( "0", $stringBuffer )
+	set $i = $i + 1
+else
+	printf "Failed: input: 0; output: %s\n", $stringBuffer
+end
+
+printf "Total cases: %d, Passed: %d, Failed: %d.\n", $cases, $i, ($cases-$i)
+
+set logging off
