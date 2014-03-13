@@ -11,4 +11,5 @@ source unitTest_itoa.in
 set logging overwrite off
 source unitTest_strcmp.in
 source unitTest_strcpy.in
+source unitTest_strcat.in
 # Add another testing case from here
