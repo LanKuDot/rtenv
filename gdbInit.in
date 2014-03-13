@@ -7,8 +7,11 @@ set logging overwrite
 
 c
 
-source unitTest_itoa.in
 set logging overwrite off
+
+shell date > unitTestReport.txt
+
+source unitTest_itoa.in
 source unitTest_strcmp.in
 source unitTest_strcpy.in
 source unitTest_strcat.in
