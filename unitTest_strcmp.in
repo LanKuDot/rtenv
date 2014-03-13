@@ -1,0 +1,32 @@
+set $stringBuffer=utString
+set $cases=3
+set $i=0
+
+set logging on
+
+printf "Test strcmp():\n"
+
+set strcpy( $stringBuffer, "acc" )
+if strcmp( "abc", $stringBuffer ) < 0
+	set $i = $i + 1
+else
+	printf "Failed: comparing %s and \"abc\" should be negative.\n", $stringBuffer
+end
+
+set strcpy( $stringBuffer, "abc" )
+if !strcmp( "abc", $stringBuffer )
+	set $i = $i + 1
+else
+	printf "Failed: comparing %s and \"abc\" should be 0\n", $stringBuffer
+end
+
+set strcpy( $stringBuffer, "aac" )
+if strcmp( "abc", $stringBuffer ) > 0
+	set $i = $i + 1
+else
+	printf "Failed: comparing %s and \"abc\" should be positive\n", $stringBuffer
+end
+
+printf "Total cases: %d, Passed: %d, Failed: %d.\n", $cases, $i, ($cases-$i)
+
+set logging off

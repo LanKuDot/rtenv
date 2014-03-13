@@ -9,4 +9,5 @@ c
 
 source unitTest_itoa.in
 set logging overwrite off
+source unitTest_strcmp.in
 # Add another testing case from here
