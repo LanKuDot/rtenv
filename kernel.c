@@ -7,7 +7,9 @@
 #include "string-util.h"
 
 /* Unit test */
-#include "unit_test.h"
+#ifdef DEBUG
+	#include "unit_test.h"
+#endif
 
 #define MAX_CMDNAME 19
 #define MAX_ARGC 19
@@ -1196,7 +1198,9 @@ int main()
 			i++;
 		current_task = task_pop(&ready_list[i])->pid;
 
-		unit_test();
+		#ifdef DEBUG
+			unit_test();
+		#endif
 	}
 
 	return 0;

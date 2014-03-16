@@ -60,7 +60,10 @@ qemudbg: main.bin $(QEMU_STM32)
 		-gdb tcp::3333 -S \
 		-kernel main.bin
 
-qemuUnitTest: main.bin $(QEMU_STM32) unit_test.c unit_test.h
+qemuUnitTest: $(QEMU_STM32) $(SRC_FILES) unit_test.c unit_test.h
+	$(MAKE) -DDEBUG
+	$(CROSS_COMPILE)objcopy -Obinary main.elf main.bin
+	$(CROSS_COMPILE)objdump -S main.elf > main.list
 	$(QEMU_STM32) -nographic -M stm32-p103 \
 		-gdb tcp::3333 -S \
 		-kernel main.bin \
