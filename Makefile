@@ -42,9 +42,11 @@ MAKE=$(CROSS_COMPILE)gcc \
 		string-util.c \
 		unit_test.c
 
+SRC_FILES=kernel.c context_switch.s syscall.s syscall.h
+
 all: main.bin
 
-main.bin: kernel.c context_switch.s syscall.s syscall.h
+main.bin: $(SRC_FILES)
 	$(MAKE)
 	$(CROSS_COMPILE)objcopy -Obinary main.elf main.bin
 	$(CROSS_COMPILE)objdump -S main.elf > main.list
