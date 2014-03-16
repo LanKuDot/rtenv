@@ -42,7 +42,8 @@ MAKE=$(CROSS_COMPILE)gcc \
 		string-util.c \
 		unit_test.c
 
-SRC_FILES=kernel.c context_switch.s syscall.s syscall.h
+SRC_FILES=kernel.c context_switch.s syscall.s syscall.h \
+		  string-util.c string-util.h
 
 all: main.bin
 
