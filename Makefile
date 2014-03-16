@@ -12,10 +12,7 @@ STM32_LIB=$(LIBDIR)/libraries/STM32F10x_StdPeriph_Driver
 
 CMSIS_PLAT_SRC = $(CMSIS_LIB)/DeviceSupport/$(VENDOR)/$(PLAT)
 
-all: main.bin
-
-main.bin: kernel.c context_switch.s syscall.s syscall.h
-	$(CROSS_COMPILE)gcc \
+MAKE=$(CROSS_COMPILE)gcc \
 		-DUSER_NAME=\"$(USER)\" \
 		-Wl,-Tmain.ld -nostartfiles \
 		-I . \
@@ -44,6 +41,11 @@ main.bin: kernel.c context_switch.s syscall.s syscall.h
 		memcpy.s \
 		string-util.c \
 		unit_test.c
+
+all: main.bin
+
+main.bin: kernel.c context_switch.s syscall.s syscall.h
+	$(MAKE)
 	$(CROSS_COMPILE)objcopy -Obinary main.elf main.bin
 	$(CROSS_COMPILE)objdump -S main.elf > main.list
 
